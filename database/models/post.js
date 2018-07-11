@@ -14,9 +14,9 @@ PostSchema.plugin(autopopulate);
 PostSchema.methods.toJSON = function() {
   return {
     message: this.message,
-    from: this.from,
-    to: this.to,
-    categories: this.categories,
+    // from: this.from,
+    // to: this.to,
+    // categories: this.categories,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt
   };
