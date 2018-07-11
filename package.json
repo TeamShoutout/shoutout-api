@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "PORT=3001 nodemon ./bin/www",
-    "start": "node ./bin/wwww"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "@sendgrid/mail": "^6.2.1",
