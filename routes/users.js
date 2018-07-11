@@ -6,7 +6,7 @@ var db = require('../database/db');
 var passport = require('passport');
 var auth = require('./auth');
 let multer = require('multer');
-let sharp = require('sharp');
+// let sharp = require('sharp');
 let Channel = require('../database/models/channel');
 
 var AWS = require('aws-sdk');
@@ -73,27 +73,27 @@ router.post('/', upload.single('profile_image'), function(req, res, next) {
     var url = 'https://s3-' + process.env.S3_IMAGE_REGION + '.amazonaws.com/' + process.env.S3_IMAGE_BUCKET + '/user-profile-images/' + imageName;
 
     // resize image then upload to s3
-    sharp(imageFile.buffer)
-      .resize(400, 400)
-      .toBuffer()
-      .then((buffer) => {
-        var data = { Key: 'user-profile-images/' + imageName, Body: buffer, ACL: 'public-read' };
+    // sharp(imageFile.buffer)
+    //   .resize(400, 400)
+    //   .toBuffer()
+    //   .then((buffer) => {
+    //     var data = { Key: 'user-profile-images/' + imageName, Body: buffer, ACL: 'public-read' };
 
-        s3Bucket.putObject(data, function(err, data) {
-          user.profile_image = url;
+    //     s3Bucket.putObject(data, function(err, data) {
+    //       user.profile_image = url;
 
-          // Add the user to the general channel and ref in channel itself
-          Channel.findOne({ name: 'general' }).then(function(channel) {
-            user.channels.push(channel.id);
-            channel.members.push(user.id);
-            channel.save();
+    //       // Add the user to the general channel and ref in channel itself
+    //       Channel.findOne({ name: 'general' }).then(function(channel) {
+    //         user.channels.push(channel.id);
+    //         channel.members.push(user.id);
+    //         channel.save();
 
-            user.save().then(function(){
-              return res.json({ user: user.toAuthJSON() });
-            });
-          });
-        });
-      });
+    //         user.save().then(function(){
+    //           return res.json({ user: user.toAuthJSON() });
+    //         });
+    //       });
+    //     });
+    //   });
   } else {
     // Add the user to the general channel and ref in channel itself
     Channel.findOne({ name: 'general' }).then(function(channel) {
@@ -175,20 +175,20 @@ router.put('/', [auth.required, upload.single('profile_image')], function(req, r
       var url = 'https://s3-' + process.env.S3_IMAGE_REGION + '.amazonaws.com/' + process.env.S3_IMAGE_BUCKET + '/user-profile-images/' + imageName;
 
       // resize image then upload to s3
-      sharp(imageFile.buffer)
-        .resize(400, 400)
-        .toBuffer()
-        .then((buffer) => {
-          var data = { Key: 'user-profile-images/' + imageName, Body: buffer, ACL: 'public-read' };
+      // sharp(imageFile.buffer)
+      //   .resize(400, 400)
+      //   .toBuffer()
+      //   .then((buffer) => {
+      //     var data = { Key: 'user-profile-images/' + imageName, Body: buffer, ACL: 'public-read' };
 
-          s3Bucket.putObject(data, function(err, data) {
-            user.profile_image = url;
+      //     s3Bucket.putObject(data, function(err, data) {
+      //       user.profile_image = url;
 
-          	user.save().then(function() {
-              return res.json({ user: user.toAuthJSON() });
-          	}).catch(next);
-          });
-        });
+      //     	user.save().then(function() {
+      //         return res.json({ user: user.toAuthJSON() });
+      //     	}).catch(next);
+      //     });
+      //   });
     } else {
       user.save().then(function(){
         return res.json({ user: user.toAuthJSON() });
