@@ -8,8 +8,9 @@ var PostSchema = new Schema({
   slackEnterpriseId: { type: String, index: true },
   slackChannelId: { type: String },
   slackSenderId: { type: String, index: true },
-  slackSenderUserName: { type: String },
+  slackSenderUsername: { type: String },
   slackRecipientIds: [{ type: String }],
+  slackRecipientUsernames: [{ type: String }],
   categories: [{ type: String }]
 }, { timestamps: true })
 

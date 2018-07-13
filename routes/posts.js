@@ -27,7 +27,8 @@ router.post('/slack-command', (req, res) => {
   post.slackEnterpriseId = req.body.enterprise_id
   post.slackChannelId = req.body.channel_id
   post.slackSenderId = req.body.user_id
-  post.slackSenderUserName = req.body.user_name
+  post.slackSenderUsername = req.body.user_name
+  post.categories = post.message.match(/\B\#\w\w+\b/g)
 
   // Store only one id in this array for now -- in the future we may want to store more
   post.slackRecipientIds = [post.message.substring(
@@ -36,7 +37,10 @@ router.post('/slack-command', (req, res) => {
   )]
 
   // Same here
-  post.categories = post.message.match(/\B\#\w\w+\b/g)
+  post.slackRecipientUsernames = [post.message.substring(
+    post.message.lastIndexOf('|') + 1, 
+    post.message.lastIndexOf('>')
+  )]
 
   post.save().then(() => {
     res.status(200).json({
