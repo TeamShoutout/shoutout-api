@@ -5,7 +5,7 @@ let Post = require('../database/models/post')
 let SlackToken = require('../database/models/slackToken')
 
 router.get('/', (req, res) => {
-  Post.find({}, (err, posts) => {
+  Post.find({ slackTeamId: req.query.slackTeamId }, (err, posts) => {
     return res.json(posts)
   })
 })
