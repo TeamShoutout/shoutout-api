@@ -7,11 +7,13 @@ var PostSchema = new Schema({
   slackTeamId: { type: String, index: true },
   slackEnterpriseId: { type: String, index: true },
   slackChannelId: { type: String },
-  slackSenderId: { type: String, index: true },
-  slackSenderUsername: { type: String },
-  slackRecipientIds: [{ type: String }],
-  slackRecipientUsernames: [{ type: String }],
-  categories: [{ type: String }]
+  slackSenderId: { type: String },
+  slackSenderRealName: { type: String },
+  slackSenderEmail: { type: String },
+  slackRecipientId: { type: String },
+  slackRecipientRealName: { type: String },
+  slackRecipientEmail: { type: String },
+  categories: [{ type: String }],
 }, { timestamps: true })
 
 PostSchema.plugin(autopopulate)
